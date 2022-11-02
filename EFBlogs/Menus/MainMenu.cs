@@ -6,7 +6,7 @@ namespace EFBlogs.Menus
 {
     internal class MainMenu : Menu
     {
-        public MainMenu(ILogger<IMenu> logger) : base(logger)
+        public MainMenu(ILogger<IMenu>? logger) : base(logger)
         {
             statusMsg.ClassDir = "EFBlogs.MainMenu";
             statusMsg.MessageStatus = MsgStatus.INFO;

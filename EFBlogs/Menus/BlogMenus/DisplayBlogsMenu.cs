@@ -2,11 +2,11 @@
 using EFBlogs.Models;
 using Microsoft.Extensions.Logging;
 
-namespace EFBlogs.Menus
+namespace EFBlogs.Menus.BlogMenus
 {
     internal class DisplayBlogsMenu : Menu
     {
-        public DisplayBlogsMenu(ILogger<IMenu> logger) : base(logger)
+        public DisplayBlogsMenu(ILogger<IMenu>? logger) : base(logger)
         {
             statusMsg.ClassDir = "EFBlogs.DisplayBlogsMenu";
             ChangeStatus("Option '1' selected");

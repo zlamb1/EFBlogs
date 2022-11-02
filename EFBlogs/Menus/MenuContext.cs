@@ -1,4 +1,5 @@
 ﻿using EFBlogs.Interfaces;
+using EFBlogs.Menus.BlogMenus;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
@@ -18,8 +19,6 @@ namespace EFBlogs.Menus
         {
             while (true)
             {
-                // fix logger nullable issue
-
                 MainMenu menu = new MainMenu(CreateLogger<IMenu>());
                 menu.Start();
 

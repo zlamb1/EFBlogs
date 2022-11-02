@@ -3,12 +3,12 @@ using EFBlogs.Models;
 using EFBlogs.Utility;
 using Microsoft.Extensions.Logging;
 
-namespace EFBlogs.Menus
+namespace EFBlogs.Menus.BlogMenus
 {
     internal class DisplayPostsMenu : Menu
     {
 
-        public DisplayPostsMenu(ILogger<IMenu> logger) : base(logger)
+        public DisplayPostsMenu(ILogger<IMenu>? logger) : base(logger)
         {
             statusMsg.ClassDir = "EFBlogs.DisplayPostsMenu";
             ChangeStatus("Option '4' selected");
@@ -67,7 +67,7 @@ namespace EFBlogs.Menus
                     if (result.Item2 == 0)
                     {
                         int numOfResults = 0;
-                        foreach(var blog in blogs)
+                        foreach (var blog in blogs)
                         {
                             numOfResults += blog.Posts.Count();
                         }
@@ -81,10 +81,11 @@ namespace EFBlogs.Menus
                                 Console.WriteLine(PostToString(post));
                             }
                         }
-                    } else
+                    }
+                    else
                     {
                         var blog = blogs[result.Item2 - 1];
-                        Console.WriteLine(blog.Posts.Count() 
+                        Console.WriteLine(blog.Posts.Count()
                             + " post(s) returned");
 
                         if (blog.Posts.Count() == 0)

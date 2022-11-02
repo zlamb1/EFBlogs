@@ -3,12 +3,12 @@ using EFBlogs.Models;
 using EFBlogs.Utility;
 using Microsoft.Extensions.Logging;
 
-namespace EFBlogs.Menus
+namespace EFBlogs.Menus.BlogMenus
 {
     internal class CreatePostMenu : Menu
     {
 
-        public CreatePostMenu(ILogger<IMenu> logger) : base(logger)
+        public CreatePostMenu(ILogger<IMenu>? logger) : base(logger)
         {
             statusMsg.ClassDir = "EFBlogs.CreatePostMenu";
             ChangeStatus("Option '3' selected");
@@ -45,7 +45,13 @@ namespace EFBlogs.Menus
                         return;
                     }
 
-                    var result = InputValidation.IsStringInt(selectionStr);
+                    Tuple<bool, int> result = Tuple.Create(false, 0);
+                    // null check to resolve compiler warnings
+                    if (selectionStr is not null)
+                    {
+                        result = InputValidation.IsStringInt(selectionStr);
+                    }
+
                     if (!result.Item1)
                     {
                         Restart("The entered blog id must be an integer.");
@@ -73,13 +79,16 @@ namespace EFBlogs.Menus
                     string? postContent = Console.ReadLine();
 
                     Post post = new Post();
-                    post.Title = postTitle;
-                    post.Content = postContent;
+                    // null checks to resolve compiler warnings
+                    if (postTitle is not null)
+                        post.Title = postTitle;
+                    if (postContent is not null)
+                        post.Content = postContent;
                     blog.Posts.Add(post);
 
                     db.SaveChanges();
 
-                    ChangeStatus("Post added - \""  + postTitle + "\"");
+                    ChangeStatus("Post added - \"" + postTitle + "\"");
                     Console.WriteLine(statusMsg);
                 }
             }

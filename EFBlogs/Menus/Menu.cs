@@ -20,20 +20,28 @@ namespace EFBlogs.Menus
 
         protected Status statusMsg { get; set; }
 
-        private ILogger<IMenu> logger;
+        private ILogger<IMenu>? logger;
         private int numOfStarts;
 
-        public Menu(ILogger<IMenu> _logger)
+        public Menu(ILogger<IMenu>? _logger)
         {
             Result = 0;
             statusMsg = new Status();
             logger = _logger;
         }
 
-        protected virtual void ChangeStatus(string msg, MsgStatus status = MsgStatus.INFO)
+        protected void ChangeStatus(string msg, MsgStatus status = MsgStatus.INFO)
         {
             statusMsg.MessageStatus = status;
             statusMsg.Message = msg;
+        }
+
+        protected void LogStatus()
+        {
+            LogLevel level = Status.LogLevelConvert(statusMsg.MessageStatus);
+            logger?.Log(level, statusMsg.Message);
+            // sleep so that logger always logs before Console.WriteLine
+            Thread.Sleep(3);
         }
 
         // by default the status is changed to a warning when a restart happens
@@ -65,11 +73,8 @@ namespace EFBlogs.Menus
                 return;
             }
 
-            logger.LogInformation(statusMsg.Message);
-            // sleep so that logger always logs before Console.WriteLine
-            Thread.Sleep(10);
+            LogStatus();
             Console.WriteLine(statusMsg);
-
         }
 
     }

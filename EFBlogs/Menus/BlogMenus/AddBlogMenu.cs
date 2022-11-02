@@ -3,11 +3,11 @@ using EFBlogs.Models;
 using EFBlogs.Utility;
 using Microsoft.Extensions.Logging;
 
-namespace EFBlogs.Menus
+namespace EFBlogs.Menus.BlogMenus
 {
     internal class AddBlogMenu : Menu
     {
-        public AddBlogMenu(ILogger<IMenu> logger) : base(logger)
+        public AddBlogMenu(ILogger<IMenu>? logger) : base(logger)
         {
             statusMsg.ClassDir = "EFBlogs.AddBlogMenu";
             ChangeStatus("Option '2' selected");
@@ -27,19 +27,11 @@ namespace EFBlogs.Menus
             }
 
             Blog blog = new Blog();
-            blog.Name = name;
+            // default 'no name' blog name
+            blog.Name = name == null ? "No Name Specified" : name;
 
             using (var db = new BlogContext())
             {
-                // make sure there isn't a duplicate blog
-                foreach (var _blog in db.Blogs)
-                {
-                    if (_blog.Name == blog.Name)
-                    {
-                        Restart("A blog with that name already exists!");
-                        return;
-                    }
-                }
                 db.Add(blog);
                 db.SaveChanges();
             }
@@ -49,5 +41,6 @@ namespace EFBlogs.Menus
 
             WaitForInput("Press enter to return to main menu.");
         }
+
     }
 }
