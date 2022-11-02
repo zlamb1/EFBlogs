@@ -1,18 +1,14 @@
-﻿using Castle.Core.Internal;
+﻿using EFBlogs.Interfaces;
 using EFBlogs.Models;
 using EFBlogs.Utility;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 
 namespace EFBlogs.Menus
 {
     internal class CreatePostMenu : Menu
     {
 
-        public CreatePostMenu() : base()
+        public CreatePostMenu(ILogger<IMenu> logger) : base(logger)
         {
             statusMsg.ClassDir = "EFBlogs.CreatePostMenu";
             ChangeStatus("Option '3' selected");

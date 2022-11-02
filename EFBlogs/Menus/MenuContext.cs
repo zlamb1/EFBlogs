@@ -1,37 +1,50 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using EFBlogs.Interfaces;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace EFBlogs.Menus
 {
-    internal class MenuContext
+    internal class MenuContext : IContext
     {
-        public MenuContext()
+
+        private IServiceProvider provider;
+
+        public MenuContext(IServiceProvider _provider)
         {
-            // probably not a good idea
-            while(true)
+            provider = _provider;
+        }
+
+        public void Start()
+        {
+            while (true)
             {
-                MainMenu menu = new MainMenu();
+                // fix logger nullable issue
+
+                MainMenu menu = new MainMenu(CreateLogger<IMenu>());
                 menu.Start();
 
                 switch (menu.Result)
                 {
                     case 1:
-                        new DisplayBlogsMenu().Start();
+                        new DisplayBlogsMenu(CreateLogger<IMenu>()).Start();
                         break;
                     case 2:
-                        new AddBlogMenu().Start();
+                        new AddBlogMenu(CreateLogger<IMenu>()).Start();
                         break;
                     case 3:
-                        new CreatePostMenu().Start();
+                        new CreatePostMenu(CreateLogger<IMenu>()).Start();
                         break;
                     case 4:
-                        new DisplayPostsMenu().Start();
+                        new DisplayPostsMenu(CreateLogger<IMenu>()).Start();
                         break;
                 }
             }
         }
+
+        private ILogger<T>? CreateLogger<T>()
+        {
+            return provider.GetService<ILogger<T>>();
+        }
+
     }
 }

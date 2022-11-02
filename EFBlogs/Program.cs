@@ -1,4 +1,6 @@
-﻿using EFBlogs.Menus;
+﻿using EFBlogs.Interfaces;
+using EFBlogs.Menus;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace EFBlogs
 {
@@ -6,7 +8,11 @@ namespace EFBlogs
     {
         static void Main(string[] args)
         {
-            new MenuContext();
+            var startup = new Startup();
+            var provider = startup.ConfigureServices();
+
+            var menuContext = provider.GetService<IContext>();
+            menuContext?.Start();
         }
     }
 }

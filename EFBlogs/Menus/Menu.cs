@@ -1,4 +1,7 @@
-﻿using EFBlogs.Utility;
+﻿using Castle.Core.Logging;
+using EFBlogs.Interfaces;
+using EFBlogs.Utility;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +11,7 @@ using System.Threading.Tasks.Dataflow;
 
 namespace EFBlogs.Menus
 {
-    internal class Menu
+    internal class Menu : IMenu
     {
         // arbitary limit to prevent stack overflows
         private static readonly int RESTART_LIMIT = 10;
@@ -17,12 +20,14 @@ namespace EFBlogs.Menus
 
         protected Status statusMsg { get; set; }
 
+        private ILogger<IMenu> logger;
         private int numOfStarts;
 
-        public Menu()
+        public Menu(ILogger<IMenu> _logger)
         {
             Result = 0;
             statusMsg = new Status();
+            logger = _logger;
         }
 
         protected virtual void ChangeStatus(string msg, MsgStatus status = MsgStatus.INFO)
@@ -60,6 +65,9 @@ namespace EFBlogs.Menus
                 return;
             }
 
+            logger.LogInformation(statusMsg.Message);
+            // sleep so that logger always logs before Console.WriteLine
+            Thread.Sleep(10);
             Console.WriteLine(statusMsg);
 
         }

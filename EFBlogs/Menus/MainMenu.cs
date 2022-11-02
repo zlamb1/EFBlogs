@@ -1,20 +1,18 @@
-﻿using EFBlogs.Utility;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using EFBlogs.Interfaces;
+using EFBlogs.Utility;
+using Microsoft.Extensions.Logging;
 
 namespace EFBlogs.Menus
 {
     internal class MainMenu : Menu
     {
-        public MainMenu() : base()
+        public MainMenu(ILogger<IMenu> logger) : base(logger)
         {
             statusMsg.ClassDir = "EFBlogs.MainMenu";
             statusMsg.MessageStatus = MsgStatus.INFO;
             statusMsg.Message = "Program started";
         }
+
         public override void Start()
         {
             
@@ -72,5 +70,6 @@ namespace EFBlogs.Menus
             Result = selection;
 
         }
+
     }
 }

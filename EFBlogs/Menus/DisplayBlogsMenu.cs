@@ -1,16 +1,12 @@
-﻿using EFBlogs.Models;
-using EFBlogs.Utility;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using EFBlogs.Interfaces;
+using EFBlogs.Models;
+using Microsoft.Extensions.Logging;
 
 namespace EFBlogs.Menus
 {
     internal class DisplayBlogsMenu : Menu
     {
-        public DisplayBlogsMenu() : base()
+        public DisplayBlogsMenu(ILogger<IMenu> logger) : base(logger)
         {
             statusMsg.ClassDir = "EFBlogs.DisplayBlogsMenu";
             ChangeStatus("Option '1' selected");
