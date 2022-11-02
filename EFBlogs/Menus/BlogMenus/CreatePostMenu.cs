@@ -48,9 +48,7 @@ namespace EFBlogs.Menus.BlogMenus
                     Tuple<bool, int> result = Tuple.Create(false, 0);
                     // null check to resolve compiler warnings
                     if (selectionStr is not null)
-                    {
                         result = InputValidation.IsStringInt(selectionStr);
-                    }
 
                     if (!result.Item1)
                     {

@@ -51,7 +51,10 @@ namespace EFBlogs.Menus.BlogMenus
                         return;
                     }
 
-                    var result = InputValidation.IsStringInt(selectionStr);
+                    Tuple<bool, int> result = Tuple.Create(false, 0);
+                    if (selectionStr is not null)
+                        result = InputValidation.IsStringInt(selectionStr);
+
                     if (!result.Item1)
                     {
                         Restart("The entered blog id must be an integer.");
